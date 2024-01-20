@@ -24,5 +24,20 @@ namespace BulkyWeb.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 创建Category
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Create(Category obj)
+        {
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }
