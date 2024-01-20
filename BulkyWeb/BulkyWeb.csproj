@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BulkyWeb.DataAccess\BulkyWeb.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
