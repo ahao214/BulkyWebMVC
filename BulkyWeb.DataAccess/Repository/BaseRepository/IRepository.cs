@@ -1,12 +1,12 @@
 ﻿using System.Linq.Expressions;
 
-namespace BulkyWeb.Repository.IRepository
+namespace BulkyWeb.DataAccess.Repository.BaseRepository
 {
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
-        T Get(Expression<Func<T,bool>> filter);
-        void Add(T entity);        
+        T Get(Expression<Func<T, bool>> filter);
+        void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
 
