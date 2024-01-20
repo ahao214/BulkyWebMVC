@@ -13,7 +13,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 
 // ×Ô¶¨Òå
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 
