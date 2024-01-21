@@ -20,7 +20,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
             return View(objProductList);
         }
@@ -101,38 +101,42 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
         }
 
+      
+       
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objProductList });
+        }
+
+        
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
+            var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
+            if (productToBeDeleted == null)
             {
-                return NotFound();
-            }
-            Product productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
-            if (productFromDb == null)
-            {
-                return NotFound();
+                return Json(new { success = false, message = "Error while deleting" });
             }
 
-            return View(productFromDb);
-        }
+            var oldImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
 
-        /// <summary>
-        /// 删除 Product
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Product obj = _unitOfWork.Product.Get(u => u.Id == id);
-            if (obj == null)
+            if (System.IO.File.Exists(oldImageUrl))
             {
-                return NotFound();
+                System.IO.File.Delete(oldImageUrl);
             }
-            _unitOfWork.Product.Remove(obj);
+
+            _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Product deleted successfully";
-            return RedirectToAction("Index");
+
+            return Json(new { success = false, message = "Delete Successful" });
         }
+
+        #endregion
+
+
     }
 }
