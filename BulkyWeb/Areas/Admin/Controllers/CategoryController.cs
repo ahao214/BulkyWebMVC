@@ -38,7 +38,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             //    ModelState.AddModelError("name", "The Displayorder cannot exactly match the Name.");
             //}
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
@@ -72,7 +72,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _unitOfWork.Category.Update(obj);
                 _unitOfWork.Save();
