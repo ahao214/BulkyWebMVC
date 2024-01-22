@@ -8,6 +8,7 @@ namespace BulkyWeb.DataAccess.Repository.BaseRepository
         IProductRepository Product { get; }
         ICompanyRepository Company { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         void Save();
     }
 }
