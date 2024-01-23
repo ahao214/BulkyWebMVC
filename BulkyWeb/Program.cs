@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkyWeb.Utility;
 using Stripe;
+using NuGet.Protocol.Plugins;
+using BulkyWeb.DataAccess.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +79,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+SeedDatabase();
 
 app.MapRazorPages();
 
@@ -86,3 +89,12 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+void SeedDatabase()
+{
+    using (var scope = app.Services .CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    }
+}
