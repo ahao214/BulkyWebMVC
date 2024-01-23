@@ -106,7 +106,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult CancelOrder()
         {
-
             var orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderVM.OrderHeader.Id);
 
             if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
@@ -129,7 +128,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["Success"] = "Order Cancelled Successfully.";
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
-
         }
 
 
@@ -169,7 +167,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 };
                 options.LineItems.Add(sessionLineItem);
             }
-
 
             var service = new SessionService();
             Session session = service.Create(options);
