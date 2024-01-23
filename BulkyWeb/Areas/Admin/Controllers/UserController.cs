@@ -71,7 +71,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 {
                     applicationUser.CompanyId = null;
                 }
-                //_unitOfWork.ApplicationUser.Update(applicationUser);
+                _unitOfWork.ApplicationUser.Update(applicationUser);
                 _unitOfWork.Save();
 
                 _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
@@ -83,7 +83,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 if (oldRole == SD.Role_Company && applicationUser.CompanyId != roleManagmentVM.ApplicationUser.CompanyId)
                 {
                     applicationUser.CompanyId = roleManagmentVM.ApplicationUser.CompanyId;
-                    //_unitOfWork.ApplicationUser.Update(applicationUser);
+                    _unitOfWork.ApplicationUser.Update(applicationUser);
                     _unitOfWork.Save();
                 }
             }
@@ -136,8 +136,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
             {
                 objFromDb.LockoutEnd = DateTime.Now.AddYears(1000);
             }
-            //_unitOfWork.ApplicationUser.Update(objFromDb);
-            //_unitOfWork.Save();
+            _unitOfWork.ApplicationUser.Update(objFromDb);
+            _unitOfWork.Save();
 
             return Json(new { success = true, message = "Operation Successful" });
         }
