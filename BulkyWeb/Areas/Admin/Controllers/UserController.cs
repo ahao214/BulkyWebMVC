@@ -94,27 +94,27 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         #region API CALLS
 
-        //[HttpGet]
-        //public IActionResult GetAll()
-        //{
-        //    List<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(includeProperties: "Company").ToList();
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(includeProperties: "Company").ToList();
 
-        //    foreach (var user in objUserList)
-        //    {
+            foreach (var user in objUserList)
+            {
 
-        //        user.Role = _userManager.GetRolesAsync(user).GetAwaiter().GetResult().FirstOrDefault();
+                user.Role = _userManager.GetRolesAsync(user).GetAwaiter().GetResult().FirstOrDefault();
 
-        //        if (user.Company == null)
-        //        {
-        //            user.Company = new Company()
-        //            {
-        //                Name = ""
-        //            };
-        //        }
-        //    }
+                if (user.Company == null)
+                {
+                    user.Company = new Company()
+                    {
+                        Name = ""
+                    };
+                }
+            }
 
-        //    return Json(new { data = objUserList });
-        //}
+            return Json(new { data = objUserList });
+        }
 
 
         //[HttpPost]
