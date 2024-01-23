@@ -29,7 +29,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 
-builder.Services.AddAuthentication().AddFacebook(option => {
+builder.Services.AddAuthentication().AddFacebook(option =>
+{
     option.AppId = "193813826680436";
     option.AppSecret = "8fc42ae3f4f2a4986143461d4e2da919";
 });
@@ -49,7 +50,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -93,7 +94,7 @@ app.Run();
 
 void SeedDatabase()
 {
-    using (var scope = app.Services .CreateScope())
+    using (var scope = app.Services.CreateScope())
     {
         var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
     }

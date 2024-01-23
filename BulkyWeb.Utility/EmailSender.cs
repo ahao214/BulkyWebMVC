@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
-using System.Net.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
 
 namespace BulkyWeb.Utility
 {
@@ -13,22 +15,18 @@ namespace BulkyWeb.Utility
             SendGridSecret = _config.GetValue<string>("SendGrid:SecretKey");
         }
 
+
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            throw new NotImplementedException();
+            //logic to send email
+
+            var client = new SendGridClient(SendGridSecret);
+
+            var from = new EmailAddress("hello@dotnetmastery.com", "Bulky Book");
+            var to = new EmailAddress(email);
+            var message = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
+
+            return client.SendEmailAsync(message);
         }
-
-        //public Task SendEmailAsync(string email, string subject, string htmlMessage)
-        //{
-        //logic to send email
-
-        //var client = new SendGridClient(SendGridSecret);
-
-        //var from = new EmailAddress("hello@dotnetmastery.com", "Bulky Book");
-        //var to = new EmailAddress(email);
-        //var message = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
-
-        //return client.SendEmailAsync(message);
-        //}
     }
 }
