@@ -46,7 +46,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             else
             {
                 //update
-                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id, includeProperties: "ProductImages");
                 return View(productVM);
             }
         }
@@ -92,12 +92,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
                             ProductId = productVM.Product.Id
                         };
 
-                        if(productVM.Product .ProductImages== null)
+                        if (productVM.Product.ProductImages == null)
                         {
-                            productVM.Product .ProductImages= new List<ProductImage> ();
+                            productVM.Product.ProductImages = new List<ProductImage>();
                         }
                         productVM.Product.ProductImages.Add(productImage);
-                       
+
                     }
                     _unitOfWork.Product.Update(productVM.Product);
                     _unitOfWork.Save();
